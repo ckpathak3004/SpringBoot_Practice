@@ -4,13 +4,13 @@ import ck.test.demo.JwtResponse;
 import ck.test.demo.Role;
 import ck.test.demo.User;
 import ck.test.demo.repository.UserRepository;
-import ck.test.demo.service.impl.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -28,21 +28,39 @@ public class AuthController {
 
     @Autowired
     private UserRepository userRepository;
+    
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
 
     // (You will need LoginRequest and JwtResponse DTO classes for input/output)
 
     @PostMapping("/register")
     public ResponseEntity<?> authenticateUser(@RequestBody User loginRequest) {
+              
+    	  String plainPwd=loginRequest.getPassword();
+    	 String encryptedPwd =passwordEncoder.encode(loginRequest.getPassword());
+         loginRequest.setPassword(encryptedPwd);
+         loginRequest.setPassword(encryptedPwd);
+           try{
+               userRepository.save(loginRequest);
+           }
+           catch(Exception exception){
 
-            userRepository.save(loginRequest);
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        loginRequest.getUsername(),
-                        loginRequest.getPassword()
-                )
-        );
+        }
 
-        SecurityContextHolder.getContext().setAuthentication(authentication);
+            try {
+                Authentication authentication = authenticationManager.authenticate(
+                        new UsernamePasswordAuthenticationToken(
+                                loginRequest.getUsername(), plainPwd
+                        )
+                );
+                SecurityContextHolder.getContext().setAuthentication(authentication);
+            }catch (Exception exception){
+                return ResponseEntity.ok(new JwtResponse("authentication failed"));
+            }
+
+
 
         // Generate the token using the authenticated user details
       List<String> roles=  loginRequest.getRoles().stream().map(Role::getName).collect(Collectors.toList());// Example roles

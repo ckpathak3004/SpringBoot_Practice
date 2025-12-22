@@ -18,8 +18,7 @@ public class JwtTokenUtil {
         return Jwts.builder()
                 .setSubject(username)
                 .claim("roles", roles) // Store roles/authorities in the token
-                .setIssuedAt(new Date(System.currentTimeMillis-Dawt.toolkit.name=WLToolkit.
-        ()))
+                .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 10)) // 10 hours validity
                 .signWith(getSigningKey(), SignatureAlgorithm.HS256)
                 .compact();
@@ -46,4 +45,3 @@ public class JwtTokenUtil {
     }
 }
 
--Dsun.java2d.opengl=false

@@ -42,7 +42,7 @@ public class SecurityConfig {
         http.csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(authorize -> authorize
                         // Public endpoints accessible by anyone
-                        .requestMatchers("/api/products/create").permitAll()
+                        .requestMatchers(HttpMethod.POST,"/api/products/create").hasAuthority("ROLE_ADMIN")
                         .requestMatchers("/api/register").permitAll()
                         // Specific HTTP methods requiring specific authorities
                         .requestMatchers(HttpMethod.GET, "/api/products/read/**").hasAuthority("USER")

@@ -7,5 +7,5 @@ import java.util.Optional;
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
     // Spring Data JPA generates: SELECT * FROM users WHERE username = ?
-    Optional<User> findByUsername(String username);
+	Optional<User> findByUsername(String username);
 }
