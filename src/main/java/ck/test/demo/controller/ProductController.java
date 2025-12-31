@@ -32,8 +32,8 @@ import java.util.List;
         }
 
         // Optional: GET all products
-        @PreAuthorize("hasAnyRole('USER'}")
-        @GetMapping
+        @PreAuthorize("hasAnyRole('ROLE_USER'}")
+        @GetMapping(value = "getProductList")
         public ResponseEntity<List<ProductResponse>> getAllProducts() {
             return ResponseEntity.ok(productService.getAllProducts());
         }
@@ -41,6 +41,7 @@ import java.util.List;
         // Optional: GET by ID
 
         @GetMapping("/read/{id}")
+        @PreAuthorize("hasAnyRole('ROLE_USER'}")
         public ResponseEntity<ProductResponse> getProductById(@PathVariable Long id) {
             return ResponseEntity.ok(productService.getProductById(id));
         }

@@ -11,13 +11,22 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
+
+    // Inject your custom handlers here
+    @Autowired
+    private  AccessDeniedHandler customAccessDeniedHandler;
+
+    @Autowired
+    private  AuthenticationEntryPoint customAuthenticationEntryPoint;
 
     @Autowired
     private JwtRequestFilter jwtRequestFilter; // Inject the filter
@@ -25,6 +34,13 @@ public class SecurityConfig {
     @Autowired
     private CustomUserDetailsService customUserDetailsService;
 
+
+
+    public SecurityConfig(AccessDeniedHandler customAccessDeniedHandler,
+                          AuthenticationEntryPoint customAuthenticationEntryPoint) {
+        this.customAccessDeniedHandler = customAccessDeniedHandler;
+        //this.customAuthenticationEntryPoint = customAuthenticationEntryPoint;
+    }
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -44,12 +60,6 @@ public class SecurityConfig {
                         // Public endpoints accessible by anyone
                         .requestMatchers(HttpMethod.POST,"/api/products/create").hasAuthority("ROLE_ADMIN")
                         .requestMatchers("/api/register").permitAll()
-                        // Specific HTTP methods requiring specific authorities
-                        .requestMatchers(HttpMethod.GET, "/api/products/read/**").hasAuthority("USER")
-
-                        // Endpoints requiring a specific Role (Spring
-                        // prefixes with ROLE_)
-                        .requestMatchers("/api/user/**").hasAnyRole("USER", "ADMIN")
                         // All other requests require the user to be authenticated
                         .anyRequest().authenticated()
                 );
@@ -57,6 +67,13 @@ public class SecurityConfig {
         // 3. Set Session Management to Stateless
         http.sessionManagement(session -> session
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+        http.exceptionHandling(exceptionHandling ->
+                exceptionHandling
+                        // Use the custom handler for 403 Forbidden errors (Access Denied)
+                        .accessDeniedHandler(customAccessDeniedHandler)
+                        // Use the custom entry point for 401 Unauthorized errors (Authentication required)
+                        .authenticationEntryPoint(customAuthenticationEntryPoint)
+        );
         http.userDetailsService(customUserDetailsService);
         // Add the custom JWT filter before Spring's standard UsernamePasswordAuthenticationFilter
         http.addFilterAfter(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
