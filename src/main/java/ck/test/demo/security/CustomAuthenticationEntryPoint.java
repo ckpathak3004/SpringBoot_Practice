@@ -1,5 +1,6 @@
 package ck.test.demo.security;
 
+import ck.test.demo.service.ErrorResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -27,7 +28,7 @@ public class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint 
         // Assuming you defined the ErrorResponse class previously
         ErrorResponse errorResponse = new ErrorResponse(
                 HttpServletResponse.SC_UNAUTHORIZED,
-                "Authentication failed: You must be logged in to access this resource."
+                "Invalid token."
         );
 
         // Use ObjectMapper to write the ErrorResponse object as JSON to the response output stream

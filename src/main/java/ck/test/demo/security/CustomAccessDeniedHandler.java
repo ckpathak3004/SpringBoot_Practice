@@ -1,6 +1,5 @@
 package ck.test.demo.security;
-package ck.test.demo.security;
-
+import ck.test.demo.service.ErrorResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
