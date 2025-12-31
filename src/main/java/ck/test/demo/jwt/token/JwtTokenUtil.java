@@ -3,6 +3,7 @@ package ck.test.demo.jwt.token;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import java.security.Key;
 import java.util.Date;
@@ -12,14 +13,15 @@ import java.util.List;
 public class JwtTokenUtil {
 
     // A secret key for signing tokens (Use an environment variable in production!)
-    private final String SECRET_KEY = "aVeryLongAndComplexSecretKeyForSigningYourJWTsThatIsAtLeast256BitsLong";
+    @Value("${jwt.secret.key}")
+    private  String SECRET_KEY;
 
     public String generateToken(String username, List<String> roles) {
         return Jwts.builder()
                 .setSubject(username)
                 .claim("roles", roles) // Store roles/authorities in the token
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 10)) // 10 hours validity
+                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 20)) // 20 second validity
                 .signWith(getSigningKey(), SignatureAlgorithm.HS256)
                 .compact();
     }
