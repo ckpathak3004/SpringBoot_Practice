@@ -39,7 +39,7 @@ public class SecurityConfig {
     public SecurityConfig(AccessDeniedHandler customAccessDeniedHandler,
                           AuthenticationEntryPoint customAuthenticationEntryPoint) {
         this.customAccessDeniedHandler = customAccessDeniedHandler;
-        //this.customAuthenticationEntryPoint = customAuthenticationEntryPoint;
+        this.customAuthenticationEntryPoint = customAuthenticationEntryPoint;
     }
 
     @Bean
@@ -60,6 +60,7 @@ public class SecurityConfig {
                         // Public endpoints accessible by anyone
                         .requestMatchers(HttpMethod.POST,"/api/products/create").hasAuthority("ROLE_ADMIN")
                         .requestMatchers("/api/register").permitAll()
+                        .requestMatchers(HttpMethod.GET,"/api/customer/*").permitAll()
                         // All other requests require the user to be authenticated
                         .anyRequest().authenticated()
                 );

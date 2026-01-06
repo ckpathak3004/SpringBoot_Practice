@@ -21,7 +21,7 @@ public class JwtTokenUtil {
                 .setSubject(username)
                 .claim("roles", roles) // Store roles/authorities in the token
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 20)) // 20 second validity
+                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60*5)) // 5 minute validity
                 .signWith(getSigningKey(), SignatureAlgorithm.HS256)
                 .compact();
     }
