@@ -3,8 +3,10 @@ package ck.test.demo;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.kafka.annotation.EnableKafka;
+import org.springframework.scheduling.annotation.EnableAsync;
 
 @SpringBootApplication
+@EnableAsync //for handling kafka call
 public class DemoApplication {
 
 	public static void main(String[] args) {

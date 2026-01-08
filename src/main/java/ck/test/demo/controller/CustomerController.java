@@ -35,7 +35,7 @@ public class CustomerController {
 
     // POST - Create a new product by accepting JSON
     @GetMapping(value = "/getCustomer")
-    public ResponseEntity<String> createProduct(@Valid @RequestParam(required = true) String emailId) throws JsonProcessingException {
+    public ResponseEntity<String> getCustomer(@Valid @RequestParam(required = true) String emailId) throws JsonProcessingException {
         List<Object[]> response = userRepository.findUserDetailsByEmail(emailId);
         List users= new ArrayList<>();
             for (Object[] objectArray:response){
@@ -44,7 +44,10 @@ public class CustomerController {
                 userResponse.setRole((String)objectArray[1]);
                 users.add(userResponse);
             }
+        String threadName = Thread.currentThread().getName();
+        System.out.println("Currently running on thread in method:getCustomer() : " + threadName);
 
+        //sending this payload to kafka topic
             kafkaProducerService.sendUserPayload(users);
         return new ResponseEntity<>(jsonMapper.writeValueAsString(users), HttpStatus.OK);
     }

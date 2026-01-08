@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.support.SendResult;
 import org.springframework.messaging.Message;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -28,11 +29,14 @@ public class KafkaProducerService {
         this.kafkaTemplate = kafkaTemplate;
     }
 
+    @Async //run this method call using different thread
     public void sendUserPayload(List<UserResponse> message) throws JsonProcessingException {
         ObjectMapper objectMapper=new ObjectMapper();
         String payload=objectMapper.writeValueAsString(message);
        // Gson gson =new Gson();
        //String payload=gson.toJson(message);
+        String threadName = Thread.currentThread().getName();
+        System.out.println("Currently running on thread in method:sendUserPayload() : " + threadName);
         CompletableFuture<SendResult<String, String>> response= kafkaTemplate.send(TOPIC_NAME, payload);
         try{
             System.out.println("Key :"+ response.copy().get().getProducerRecord().value());

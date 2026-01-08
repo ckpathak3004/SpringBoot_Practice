@@ -35,7 +35,7 @@ public class MyKafkaListener {
             @Payload String message,
             @Header(KafkaHeaders.RECEIVED_TOPIC) String topic,
             @Header(KafkaHeaders.RECEIVED_PARTITION) int partition,
-            @Header(KafkaHeaders.OFFSET) long offset,Acknowledgment acknowledgment) throws JsonProcessingException {
+            @Header(KafkaHeaders.OFFSET) long offset,Acknowledgment acknowledgment)  {
         log.info("Consuming message - Topic: {}, Partition: {}, Offset: {}",
                 topic, partition, offset);
 
@@ -80,5 +80,20 @@ public class MyKafkaListener {
                 topic, partition, offset);
         // Implement DLQ logic here (e.g., send to a separate Kafka topic or database)
     }
+
+    @KafkaListener(
+            topics = "myTestTopic2",
+            groupId = "test-group-force-new-v4",
+            containerFactory = "kafkaListenerContainerFactory"
+    )
+    public void listenMsgFromTopic2(
+            @Payload String message,
+            @Header(KafkaHeaders.RECEIVED_TOPIC) String topic,
+            @Header(KafkaHeaders.RECEIVED_PARTITION) int partition,
+            @Header(KafkaHeaders.OFFSET) long offset,Acknowledgment acknowledgment){
+          System.out.println("Message from topic 2:"+message);
+           acknowledgment.acknowledge();
+    }
+
 
 }
