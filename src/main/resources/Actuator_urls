@@ -1,0 +1,6 @@
+#management.server.port=9001
+List all available metrics: http://localhost:9001/actuator/metrics
+CPU Usage: http://localhost:9001/actuator/metrics/system.cpu.usage
+Memory Usage: http://localhost:9001/actuator/metrics/jvm.memory.used
+#hit the any existing API and the see that API performance on the below URL
+HTTP Requests: http://localhost:9001/actuator/metrics/http.server.requests

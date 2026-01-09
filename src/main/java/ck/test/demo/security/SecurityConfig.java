@@ -60,6 +60,8 @@ public class SecurityConfig {
                         // Public endpoints accessible by anyone
                         .requestMatchers(HttpMethod.POST,"/api/products/create").hasAuthority("ROLE_ADMIN")
                         .requestMatchers("/api/register").permitAll()
+                        //enable actuator end point
+                        .requestMatchers("/actuator/**").permitAll()
                         .requestMatchers(HttpMethod.GET,"/api/customer/*").permitAll()
                         // All other requests require the user to be authenticated
                         .anyRequest().authenticated()

@@ -43,6 +43,6 @@ public class KafkaProducerService {
         } catch (Exception exception){
             System.out.println("failed:"+exception.getMessage());
         }
-        kafkaTemplate.send(TOPIC_NAME2,"sending message on topic 2");
+        kafkaTemplate.send(TOPIC_NAME2,"sending message on topic on 8th of JAN");
     }
 }

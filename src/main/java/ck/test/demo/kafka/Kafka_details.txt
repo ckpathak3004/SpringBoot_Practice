@@ -30,6 +30,11 @@ if topic exists already then
 
 .\bin\windows\kafka-topics.bat --topic --topic myTestTopic --bootstrap-server localhost:9092
 
+#check partition count
+kafka-topics.bat --describe --topic myTopic --bootstrap-server localhost:9092
+
+# Increase partitions
+kafka-topics.bat --alter --topic myTopic --partitions 10 --bootstrap-server localhost:9092
 
 6: start the consumer first so you can watch messages appear in real-time as you produce them
 
