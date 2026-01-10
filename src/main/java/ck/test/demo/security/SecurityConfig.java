@@ -60,8 +60,13 @@ public class SecurityConfig {
                         // Public endpoints accessible by anyone
                         .requestMatchers(HttpMethod.POST,"/api/products/create").hasAuthority("ROLE_ADMIN")
                         .requestMatchers("/api/register").permitAll()
-                        //enable actuator end point
-                        .requestMatchers("/actuator/**").permitAll()
+                        //enable actuator end point based on ROLE
+                        .requestMatchers(HttpMethod.GET, "/actuator/metrics/system.cpu.usage").hasAuthority("ROLE_VIEWER")
+                        // secured endpoints - requires ADMIN role
+                        .requestMatchers(HttpMethod.GET,"/actuator/env").hasAuthority("ROLE_ADMIN")
+                        .requestMatchers(HttpMethod.GET,"/actuator/loggers").hasAuthority("ROLE_ADMIN")
+                        .requestMatchers(HttpMethod.GET,"/actuator/heapdump").hasAuthority("ROLE_ADMIN")
+                        .requestMatchers(HttpMethod.GET,"/actuator/threaddump").hasAuthority("ROLE_ADMIN")
                         .requestMatchers(HttpMethod.GET,"/api/customer/*").permitAll()
                         // All other requests require the user to be authenticated
                         .anyRequest().authenticated()
