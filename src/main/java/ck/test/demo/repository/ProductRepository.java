@@ -1,6 +1,6 @@
 package ck.test.demo.repository;
 
-import ck.test.demo.Product;
+import ck.test.demo.pojo.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

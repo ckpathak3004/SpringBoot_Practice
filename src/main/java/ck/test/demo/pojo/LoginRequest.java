@@ -1,4 +1,4 @@
-package ck.test.demo;
+package ck.test.demo.pojo;
 
 public class LoginRequest {
     private String userName;

@@ -1,45 +1,30 @@
+package ck.test.demo.pojo;
 
-package ck.test.demo;
-
-import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 
-@Entity
-@Table(name = "product")
-public class Product {
+public class ProductRequest {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    @Column(nullable = false, length = 100)
+    @NotBlank(message = "Name is required")
     private String name;
 
-    @Column(columnDefinition = "TEXT")
     private String description;
 
-    @Column(nullable = false, precision = 10, scale = 2)
+    @NotNull(message = "Price is required")
+    @DecimalMin(value = "0.01", message = "Price must be greater than 0")
     private BigDecimal price;
 
-    @Column(nullable = false)
+    @NotNull(message = "Stock quantity is required")
+    @Min(value = 0, message = "Stock cannot be negative")
     private Integer stock;
 
-    @Column(nullable = false, length = 50)
+    @NotBlank(message = "Category is required")
     private String category;
 
-    @Column(name = "created_at", updatable = false)
-    private LocalDateTime createdAt;
-
-    @PrePersist
-    protected void onCreate() {
-        createdAt = LocalDateTime.now();
-    }
-
     // Constructors
-    public Product() {}
+    public ProductRequest() {}
 
-    public Product(String name, String description, BigDecimal price, Integer stock, String category) {
+    public ProductRequest(String name, String description, BigDecimal price, Integer stock, String category) {
         this.name = name;
         this.description = description;
         this.price = price;
@@ -48,9 +33,6 @@ public class Product {
     }
 
     // Getters and Setters
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
-
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }
 
@@ -65,6 +47,4 @@ public class Product {
 
     public String getCategory() { return category; }
     public void setCategory(String category) { this.category = category; }
-
-    public LocalDateTime getCreatedAt() { return createdAt; }
 }

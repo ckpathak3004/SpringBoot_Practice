@@ -1,4 +1,4 @@
-package ck.test.demo;
+package ck.test.demo.pojo;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

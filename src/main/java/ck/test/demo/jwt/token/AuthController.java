@@ -1,8 +1,8 @@
 package ck.test.demo.jwt.token;
 // AuthController.java
-import ck.test.demo.JwtResponse;
-import ck.test.demo.Role;
-import ck.test.demo.User;
+import ck.test.demo.pojo.JwtResponse;
+import ck.test.demo.pojo.Role;
+import ck.test.demo.pojo.User;
 import ck.test.demo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

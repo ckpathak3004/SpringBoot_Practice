@@ -1,7 +1,6 @@
 package ck.test.demo.service;
 
-import ck.test.demo.User;
-import org.springframework.security.core.userdetails.UserDetails;
+import ck.test.demo.pojo.User;
 
 import java.util.List;
 

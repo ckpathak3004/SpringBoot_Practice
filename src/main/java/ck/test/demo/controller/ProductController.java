@@ -1,9 +1,8 @@
 package ck.test.demo.controller;
 
-import ck.test.demo.Product;
-import ck.test.demo.ProductResponse;
+import ck.test.demo.pojo.Product;
+import ck.test.demo.pojo.ProductResponse;
 import ck.test.demo.service.ProductService;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

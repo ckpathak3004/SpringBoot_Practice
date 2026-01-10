@@ -1,8 +1,8 @@
 package ck.test.demo.service.impl;
 
 
-import ck.test.demo.Product;
-import ck.test.demo.ProductResponse;
+import ck.test.demo.pojo.Product;
+import ck.test.demo.pojo.ProductResponse;
 import ck.test.demo.repository.ProductRepository;
 import ck.test.demo.service.ProductService;
 import jakarta.validation.Valid;

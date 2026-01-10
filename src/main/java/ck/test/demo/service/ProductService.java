@@ -1,7 +1,7 @@
 package ck.test.demo.service;
 
-import ck.test.demo.Product;
-import ck.test.demo.ProductResponse;
+import ck.test.demo.pojo.Product;
+import ck.test.demo.pojo.ProductResponse;
 import jakarta.validation.Valid;
 
 import java.util.List;
