@@ -1,4 +1,5 @@
 #management.server.port=9001
+To see a full list of all available and correctly exposed endpoints, http://localhost:9001/actuator
 List all available metrics: http://localhost:9001/actuator/metrics
 CPU Usage: http://localhost:9001/actuator/metrics/system.cpu.usage
 Memory Usage: http://localhost:9001/actuator/metrics/jvm.memory.used
