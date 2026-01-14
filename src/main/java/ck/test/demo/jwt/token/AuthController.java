@@ -4,6 +4,8 @@ import ck.test.demo.pojo.JwtResponse;
 import ck.test.demo.pojo.Role;
 import ck.test.demo.pojo.User;
 import ck.test.demo.repository.UserRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -20,6 +22,7 @@ import java.util.stream.Collectors;
 @RequestMapping("/api")
 public class AuthController {
 
+    private static final Logger log = LoggerFactory.getLogger(AuthController.class);
     @Autowired
     private AuthenticationManager authenticationManager;
 
@@ -57,6 +60,7 @@ public class AuthController {
                 );
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             }catch (Exception exception){
+                log.error("Log in exception :{}", exception.getMessage());
                 return ResponseEntity.ok(new JwtResponse("authentication failed"));
             }
 
