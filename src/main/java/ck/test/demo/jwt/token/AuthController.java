@@ -61,6 +61,7 @@ public class AuthController {
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             }catch (Exception exception){
                 log.error("Log in exception :{}", exception.getMessage());
+                System.out.println("Error while login :"+exception.getMessage());
                 return ResponseEntity.ok(new JwtResponse("authentication failed"));
             }
 
