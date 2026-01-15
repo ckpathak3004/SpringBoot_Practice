@@ -49,7 +49,6 @@ public class AuthController {
                userRepository.save(loginRequest);
            }
            catch(Exception exception){
-
         }
 
             try {
