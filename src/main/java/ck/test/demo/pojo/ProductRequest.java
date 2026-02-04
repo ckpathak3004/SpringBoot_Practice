@@ -1,8 +1,13 @@
 package ck.test.demo.pojo;
 
 import jakarta.validation.constraints.*;
+import lombok.Getter;
+import lombok.Setter;
+
 import java.math.BigDecimal;
 
+@Getter
+@Setter
 public class ProductRequest {
 
     @NotBlank(message = "Name is required")
@@ -21,30 +26,4 @@ public class ProductRequest {
     @NotBlank(message = "Category is required")
     private String category;
 
-    // Constructors
-    public ProductRequest() {}
-
-    public ProductRequest(String name, String description, BigDecimal price, Integer stock, String category) {
-        this.name = name;
-        this.description = description;
-        this.price = price;
-        this.stock = stock;
-        this.category = category;
-    }
-
-    // Getters and Setters
-    public String getName() { return name; }
-    public void setName(String name) { this.name = name; }
-
-    public String getDescription() { return description; }
-    public void setDescription(String description) { this.description = description; }
-
-    public BigDecimal getPrice() { return price; }
-    public void setPrice(BigDecimal price) { this.price = price; }
-
-    public Integer getStock() { return stock; }
-    public void setStock(Integer stock) { this.stock = stock; }
-
-    public String getCategory() { return category; }
-    public void setCategory(String category) { this.category = category; }
 }
